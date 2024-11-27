@@ -1,0 +1,11 @@
+# Node image for running the application
+FROM node
+
+# set the working directory
+WORKDIR /frontend
+
+# copy the contents to the working directory
+COPY * ./
+
+# download all the packages before creating the image
+RUN npm install
