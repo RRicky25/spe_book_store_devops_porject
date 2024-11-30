@@ -2,7 +2,7 @@
 FROM node
 
 # copy the contents to the working directory
-COPY ./ /backend
+COPY ./ /backend/
 
 # set the working directory
 WORKDIR /backend
