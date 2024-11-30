@@ -12,8 +12,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://book-app-frontend-tau.vercel.app',
-    'http://192.168.49.2:32559'
-
+    'http://192.168.49.2:32559',
+    'http://frontend.example.com'
   ],
   credentials: true
 }))
