@@ -1,5 +1,5 @@
 # Node image for running the application
-FROM node
+FROM node:22.11.0
 
 # copy the contents to the working directory
 COPY ./ /backend/
