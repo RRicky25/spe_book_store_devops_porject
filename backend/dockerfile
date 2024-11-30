@@ -1,11 +1,11 @@
 # Node image for running the application
 FROM node
 
+# copy the contents to the working directory
+COPY ./ /backend
+
 # set the working directory
 WORKDIR /backend
-
-# copy the contents to the working directory
-COPY * ./
 
 # download all the packages before creating the image
 RUN npm install
