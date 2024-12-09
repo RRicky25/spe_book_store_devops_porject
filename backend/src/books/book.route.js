@@ -1,28 +1,41 @@
-                    const express = require('express');
+const express = require('express');
+const logger = require("../../logger"); // Import the logger
 const Book = require('./book.model');
 const { postABook, getAllBooks, getSingleBook, UpdateBook, deleteABook } = require('./book.controller');
 const verifyAdminToken = require('../middleware/verifyAdminToken');
-const router =  express.Router();
+const router = express.Router();
 
-// frontend => backend server => controller => book schema  => database => send to server => back to the frontend
-//post = when submit something fronted to db
-// get =  when get something back from db
-// put/patch = when edit or update something
-// delete = when delete something
+// Log when the router is loaded
+logger.info("Book routes initialized.");
 
-// post a book
-router.post("/create-book", verifyAdminToken, postABook)
+// POST a book
+router.post("/create-book", verifyAdminToken, (req, res, next) => {
+    logger.info(`POST /create-book - Request received. Body: ${JSON.stringify(req.body)}`);
+    next();
+}, postABook);
 
-// get all books
-router.get("/", getAllBooks);
+// GET all books
+router.get("/", (req, res, next) => {
+    logger.info("GET / - Fetch all books requested.");
+    next();
+}, getAllBooks);
 
-// single book endpoint
-router.get("/:id", getSingleBook);
+// GET a single book
+router.get("/:id", (req, res, next) => {
+    logger.info(`GET /${req.params.id} - Fetch single book requested.`);
+    next();
+}, getSingleBook);
 
-// update a book endpoint
-router.put("/edit/:id", verifyAdminToken, UpdateBook);
+// PUT (Update) a book
+router.put("/edit/:id", verifyAdminToken, (req, res, next) => {
+    logger.info(`PUT /edit/${req.params.id} - Update book requested. Body: ${JSON.stringify(req.body)}`);
+    next();
+}, UpdateBook);
 
-router.delete("/:id", verifyAdminToken, deleteABook)
-
+// DELETE a book
+router.delete("/:id", verifyAdminToken, (req, res, next) => {
+    logger.info(`DELETE /${req.params.id} - Delete book requested.`);
+    next();
+}, deleteABook);
 
 module.exports = router;
