@@ -5,11 +5,11 @@ const postABook = async (req, res) => {
     try {
         const newBook = await Book({ ...req.body });
         await newBook.save();
-        logger.info("Book Posted successfully", { bookId: newBook._id });
+        logger.info("Book Posted successfully");
         res.status(200).send({ message: "Book posted successfully", book: newBook })
     } catch (error) {
         console.error("Error creating book", error);
-        logger.error("Error creating book", { error: error.message });
+        logger.error("Error creating book");
         res.status(500).send({ message: "Failed to create book" })
     }
 }
@@ -18,12 +18,12 @@ const postABook = async (req, res) => {
 const getAllBooks = async (req, res) => {
     try {
         const books = await Book.find().sort({ createdAt: -1 });
-        logger.info("Fetched all books", { count: books.length });
+        logger.info("Fetched all books");
         res.status(200).send(books);
 
     } catch (error) {
         console.error("Error fetching books", error);
-        logger.error("Error fetching books", { error: error.message });
+        logger.error("Error fetching books");
         res.status(500).send({ message: "Failed to fetch books" });
     }
 }
@@ -33,16 +33,16 @@ const getSingleBook = async (req, res) => {
         const { id } = req.params;
         const book = await Book.findById(id);
         if (!book) {
-            logger.warn("Book not found", { bookId: id });
+            logger.warn("Book not found");
             res.status(404).send({ message: "Book not Found!" });
             return;
         }
-        logger.info("Fetched single book", { bookId: id });
+        logger.info("Fetched single book");
         res.status(200).send(book);
 
     } catch (error) {
         console.error("Error fetching book", error);
-        logger.error("Error fetching book", { error: error.message });
+        logger.error("Error fetching book");
         res.status(500).send({ message: "Failed to fetch book" })
     }
 
@@ -54,18 +54,18 @@ const UpdateBook = async (req, res) => {
         const { id } = req.params;
         const updatedBook = await Book.findByIdAndUpdate(id, req.body, { new: true });
         if (!updatedBook) {
-            logger.warn("Book not found for update", { bookId: id });
+            logger.warn("Book not found for update");
             res.status(404).send({ message: "Book is not Found!" });
             return;
         }
-        logger.info("Book updated successfully", { bookId: id });
+        logger.info("Book updated successfully");
         res.status(200).send({
             message: "Book updated successfully",
             book: updatedBook
         });
     } catch (error) {
         console.error("Error updating a book", error);
-        logger.error("Error updating a book", { error: error.message });
+        logger.error("Error updating a book");
         res.status(500).send({ message: "Failed to update a book" })
     }
 }
@@ -75,18 +75,18 @@ const deleteABook = async (req, res) => {
         const { id } = req.params;
         const deletedBook = await Book.findByIdAndDelete(id);
         if (!deletedBook) {
-            logger.warn("Book not found for deletion", { bookId: id });
+            logger.warn("Book not found for deletion");
             res.status(404).send({ message: "Book is not Found!" });
             return;
         }
-        logger.info("Book deleted successfully", { bookId: id });
+        logger.info("Book deleted successfully");
         res.status(200).send({
             message: "Book deleted successfully",
             book: deletedBook
         });
     } catch (error) {
         console.error("Error deleting a book", error);
-        logger.error("Error deleting a book", { error: error.message });
+        logger.error("Error deleting a book");
         res.status(500).send({ message: "Failed to delete a book" })
     }
 };
