@@ -1,0 +1,66 @@
+pipeline{
+    environment{
+        frontend_image_name = "frontend_image"
+        backend_image_name = "backend_image"
+        elk_image_name = "elk_image"
+        repo_name = "rricky25"
+    }
+    agent any
+    stages{
+        stage('Stage 1: Git Clone'){
+            steps{
+                git branch: 'main',
+                url:'https://github.com/RRicky25/spe_book_store_devops_porject.git'
+            }
+        }
+        stage('Stage 2 : Create Frontend image'){
+            steps{
+                script{
+                    frontend_image = docker.build("${repo_name}/${frontend_image_name}", "./frontend")
+                }
+            }
+        }
+        stage('Stage 3 : push frontend image to docker hub'){
+            steps{
+                script{
+                    docker.withRegistry('', 'DockerHubCred'){
+                        frontend_image.push()
+                    }
+                }
+            }
+        }
+        stage('Stage 4 : Create Backend image'){
+            steps{
+                script{
+                    backend_image = docker.build("${repo_name}/${backend_image_name}", "./backend")
+                }
+            }
+        }
+        stage('Stage 5 : push backend image to docker hub'){
+            steps{
+                script{
+                    docker.withRegistry('', 'DockerHubCred'){
+                        backend_image.push()
+                    }
+                }
+            }
+        }
+        stage('Stage 6 : Create elk image'){
+            steps{
+                script{
+                    elk_image = docker.build("${repo_name}/${elk_image_name}", "./elk")
+                }
+            }
+        }
+        stage('Stage 7 : push elk image to docker hub'){
+            steps{
+                script{
+                    docker.withRegistry('', 'DockerHubCred'){
+                        elk_image.push()
+                    }
+                }
+            }
+        }
+        
+    }
+}
