@@ -31,7 +31,7 @@ RUN apt-get update \
 # Expose necessary ports
 EXPOSE 9200 5601 5044
 
-# Create a user for Elasticsearch and give it the necessary permissions if not already created. Testing comment for webhook.
+# Create a user for Elasticsearch and give it the necessary permissions if not already created. Testing comment for webhook. testing.
 RUN getent group elasticsearch || groupadd -r elasticsearch \
     && getent passwd elasticsearch || useradd -r -g elasticsearch elasticsearch \
     && chown -R elasticsearch:elasticsearch /usr/share/elasticsearch /etc/elasticsearch /var/log/elasticsearch /var/lib/elasticsearch
