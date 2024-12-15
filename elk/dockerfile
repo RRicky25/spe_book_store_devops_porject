@@ -36,7 +36,7 @@ RUN getent group elasticsearch || groupadd -r elasticsearch \
     && getent passwd elasticsearch || useradd -r -g elasticsearch elasticsearch \
     && chown -R elasticsearch:elasticsearch /usr/share/elasticsearch /etc/elasticsearch /var/log/elasticsearch /var/lib/elasticsearch
 
-# Ensure the Logstash data directory is writable
+# Ensure the Logstash data directory is writable. testing.
 RUN chmod -R 777 /usr/share/logstash/data
 
 # Copy configuration files (ensure these files exist in the same directory as the Dockerfile)
